@@ -38,7 +38,7 @@ public class Main {
             try {
                 File myObj = new File(pathArr[j]);
                 Scanner myReader = new Scanner(myObj);
-                String drawName = pathArr[j].substring(72, 80);
+                String drawName = getDrawName(pathArr[j]);
                 while (myReader.hasNextLine()) {
                     String data = myReader.nextLine();
                     String[] strArr = data.split(" ");
@@ -61,6 +61,14 @@ public class Main {
         Pattern strPattern = Pattern.compile("[0-9]{6}");
         Matcher matcher = strPattern.matcher(str);
         return matcher.find();
+    }
+
+    public static String getDrawName(String path) {
+        String separater = "\\";
+        String[] splittedPath = path.split(Pattern.quote(separater));
+        String fileName = splittedPath[splittedPath.length - 1];
+        int pointIndex = fileName.indexOf(".");
+        return fileName.substring(0, pointIndex);
     }
 
     public static void compareAndTell(HashMap prizeList, HashSet myBondsList) {
@@ -87,6 +95,4 @@ public class Main {
         HashSet myBondsList = readBondNumberFile(myBondsListPath);
         compareAndTell(prizeList, myBondsList);
     }
-
-
 }
